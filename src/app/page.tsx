@@ -1,4 +1,4 @@
-import TreeComparator from "@/components/TreeComparator";
+import TreeComparator from '../components/TreeComparator.jsx';
 
 const currentData = {
   name: "crm",

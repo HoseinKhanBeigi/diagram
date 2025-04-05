@@ -2,25 +2,21 @@
 
 import { useState } from 'react';
 import * as d3 from 'd3';
-import TreeDiagram from './TreeDiagram';
+import TreeDiagram from './TreeDiagram.jsx';
 
-interface TreeNode {
-  name: string;
-  children?: TreeNode[];
-}
-
-interface TreeComparatorProps {
-  currentData?: TreeNode;
-  targetData?: TreeNode;
-}
-
-const TreeComparator = ({ currentData, targetData }: TreeComparatorProps) => {
+/**
+ * A component for comparing two tree structures
+ * @param {Object} props - Component props
+ * @param {Object} [props.currentData] - Current tree data
+ * @param {Object} [props.targetData] - Target tree data
+ */
+const TreeComparator = ({ currentData, targetData }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [highlightDifferences, setHighlightDifferences] = useState(false);
   const [currentZoom, setCurrentZoom] = useState(1);
   const [targetZoom, setTargetZoom] = useState(1);
 
-  const handleZoom = (tree: 'current' | 'target', zoom: number) => {
+  const handleZoom = (tree, zoom) => {
     if (tree === 'current') {
       setCurrentZoom(zoom);
     } else {

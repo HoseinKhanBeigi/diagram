@@ -3,23 +3,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-interface TreeNode {
-  name: string;
-  children?: TreeNode[];
-  _children?: TreeNode[];
-}
-
-interface CollapsibleTreeProps {
-  data: TreeNode;
-  width?: number;
-  height?: number;
-  highlightDifferences?: boolean;
-  zoom?: number;
-  onZoomChange?: (zoom: number) => void;
-  isTarget?: boolean;
-  targetData?: TreeNode;
-}
-
+/**
+ * A collapsible tree diagram component using D3.js
+ * @param {Object} props - Component props
+ * @param {Object} props.data - The tree data structure
+ * @param {number} [props.width=1200] - Width of the diagram
+ * @param {number} [props.height=800] - Height of the diagram
+ * @param {boolean} [props.highlightDifferences=false] - Whether to highlight differences
+ * @param {number} [props.zoom=1] - Zoom level
+ * @param {Function} [props.onZoomChange] - Callback for zoom changes
+ * @param {boolean} [props.isTarget=false] - Whether this is the target tree
+ * @param {Object} [props.targetData] - Target tree data for comparison
+ */
 const CollapsibleTree = ({ 
   data, 
   width = 1200,
@@ -29,9 +24,9 @@ const CollapsibleTree = ({
   onZoomChange,
   isTarget = false,
   targetData
-}: CollapsibleTreeProps) => {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const [treeData, setTreeData] = useState<TreeNode>(data);
+}) => {
+  const svgRef = useRef(null);
+  const [treeData, setTreeData] = useState(data);
 
   useEffect(() => {
     if (!svgRef.current || !treeData) return;
@@ -51,7 +46,7 @@ const CollapsibleTree = ({
     const dx = 25;
     const dy = innerWidth / (1 + root.height);
     
-    const tree = d3.tree<TreeNode>()
+    const tree = d3.tree()
       .nodeSize([dx, dy])
       .separation((a, b) => (a.parent === b.parent ? 2 : 4));
 
@@ -74,18 +69,18 @@ const CollapsibleTree = ({
       .attr('pointer-events', 'all');
 
     // Define the diagonal generator for links
-    const diagonal = d3.linkHorizontal<d3.HierarchyLink<TreeNode>, d3.HierarchyPointNode<TreeNode>>()
+    const diagonal = d3.linkHorizontal()
       .x(d => d.y)
       .y(d => d.x);
 
     // Function to check if a node is different
-    const isNodeDifferent = (node: d3.HierarchyNode<TreeNode>, targetNode: d3.HierarchyNode<TreeNode> | undefined): boolean => {
+    const isNodeDifferent = (node, targetNode) => {
       if (!targetNode) return true;
       
       // Get the path to the current node
-      const getPath = (node: d3.HierarchyNode<TreeNode>): string[] => {
-        const path: string[] = [];
-        let current: d3.HierarchyNode<TreeNode> | undefined = node;
+      const getPath = (node) => {
+        const path = [];
+        let current = node;
         while (current && current.parent) {
           path.unshift(current.data.name);
           current = current.parent;
@@ -94,7 +89,7 @@ const CollapsibleTree = ({
       };
 
       // Find the corresponding node in the target tree
-      const findNodeByPath = (current: d3.HierarchyNode<TreeNode>, path: string[]): d3.HierarchyNode<TreeNode> | undefined => {
+      const findNodeByPath = (current, path) => {
         if (path.length === 0) return current;
         const childName = path[0];
         const child = current.children?.find(c => c.data.name === childName);
@@ -130,7 +125,7 @@ const CollapsibleTree = ({
     };
 
     // Function to update the tree layout
-    function update(event: any, source: d3.HierarchyPointNode<TreeNode>) {
+    function update(event, source) {
       const duration = event?.altKey ? 2500 : 250;
       const nodes = root.descendants().reverse();
       const links = root.links();
@@ -142,20 +137,20 @@ const CollapsibleTree = ({
       let left = root;
       let right = root;
       root.eachBefore(node => {
-        if (node.x! < left.x!) left = node;
-        if (node.x! > right.x!) right = node;
+        if (node.x < left.x) left = node;
+        if (node.x > right.x) right = node;
       });
 
-      const treeHeight = right.x! - left.x! + margin.top + margin.bottom;
+      const treeHeight = right.x - left.x + margin.top + margin.bottom;
 
       // Update the SVG dimensions
       svg.transition()
         .duration(duration)
         .attr('height', treeHeight)
-        .attr('viewBox', [-margin.left, left.x! - margin.top, width, treeHeight].join(' '));
+        .attr('viewBox', [-margin.left, left.x - margin.top, width, treeHeight].join(' '));
 
       // Update the nodes
-      const node = gNode.selectAll<SVGGElement, d3.HierarchyPointNode<TreeNode>>('g')
+      const node = gNode.selectAll('g')
         .data(nodes, d => d.data.name);
 
       // Enter new nodes
@@ -217,27 +212,27 @@ const CollapsibleTree = ({
         .remove();
 
       // Update the links
-      const link = gLink.selectAll<SVGPathElement, d3.HierarchyLink<TreeNode>>('path')
+      const link = gLink.selectAll('path')
         .data(links, d => d.target.data.name);
 
       // Enter new links
       const linkEnter = link.enter().append('path')
         .attr('d', d => {
-          const o = {x: source.x0!, y: source.y0!};
-          return diagonal({source: o, target: o} as any);
+          const o = {x: source.x0, y: source.y0};
+          return diagonal({source: o, target: o});
         });
 
       // Transition links to their new position
       link.merge(linkEnter).transition()
         .duration(duration)
-        .attr('d', diagonal as any);
+        .attr('d', diagonal);
 
       // Transition exiting links
       link.exit().transition()
         .duration(duration)
         .attr('d', d => {
-          const o = {x: source.x!, y: source.y!};
-          return diagonal({source: o, target: o} as any);
+          const o = {x: source.x, y: source.y};
+          return diagonal({source: o, target: o});
         })
         .remove();
 
