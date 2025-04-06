@@ -1,4 +1,4 @@
-import TreeComparator from '../components/TreeComparator.jsx';
+import TreeComparator from "../components/TreeComparator.jsx";
 
 const currentData = {
   name: "crm",
@@ -9,7 +9,6 @@ const currentData = {
         {
           name: "مدیریت قالب",
           children: [
-            
             { name: "فعال/غیرفعال/حذف یک قالب" },
             { name: "مشاهده همه" },
             { name: "جستجوی قالب براساس نوع و سکشن" },
@@ -18,7 +17,6 @@ const currentData = {
         {
           name: "مدیریت سرنخ",
           children: [
-            
             { name: "تغییر وضعیت" },
             { name: "ارتباط سرنخ" },
             { name: "جستجوی سرنخ" },
@@ -28,7 +26,6 @@ const currentData = {
         {
           name: "داشبورد",
           children: [
-            
             { name: "دریافت اطلاعات کارت ها" },
             { name: "دریافت اطلاعات کارت ها براساس نوع محصول	" },
           ],
@@ -36,7 +33,6 @@ const currentData = {
         {
           name: "سرنخ حقیقی",
           children: [
-            
             { name: "ارسال پیام" },
             { name: "ارسال ایمیل" },
             { name: "اختصاص دادن" },
@@ -52,7 +48,6 @@ const currentData = {
         {
           name: "سرنخ حقوقی",
           children: [
-            
             { name: "ارسال پیام" },
             { name: "ارسال ایمیل" },
             { name: "اختصاص دادن" },
@@ -130,16 +125,15 @@ const currentData = {
         },
         {
           name: "مرکز اطلاع رسانی",
-          children: [ { name: "مشاهده همه" }],
+          children: [{ name: "مشاهده همه" }],
         },
         {
           name: "فرصت فروش",
-          children: [ { name: "مشاهده همه" }],
+          children: [{ name: "مشاهده همه" }],
         },
         {
           name: "تسک",
           children: [
-            
             { name: "مشاهده همه	" },
             { name: "مشاهده تسک های یک سرنخ	" },
             { name: "تغییر وضعیت تسک به باز" },
@@ -167,24 +161,15 @@ const currentData = {
         },
         {
           name: "افراد",
-          children: [
-            
-            { name: "جستجوی افراد" },
-            { name: "دریافت فایل اکسل" },
-          ],
+          children: [{ name: "جستجوی افراد" }, { name: "دریافت فایل اکسل" }],
         },
         {
           name: "شرکت ها",
-          children: [
-            
-            { name: "جستجوی شرکت ها" },
-            { name: "دریافت فایل اکسل" },
-          ],
+          children: [{ name: "جستجوی شرکت ها" }, { name: "دریافت فایل اکسل" }],
         },
         {
           name: "احراز هویت",
           children: [
-            
             { name: "دانلود" },
             { name: "رد" },
             { name: "تائید" },
@@ -253,14 +238,15 @@ const currentData = {
           ],
         },
         {
-          name:"بیزینس ها	",
+          name: "بیزینس ها	",
           children: [
             { name: "ثبت" },
             { name: "جستجو با کد" },
             { name: "جستجو" },
           ],
         },
-        {name:"مدیریت پنل	",
+        {
+          name: "مدیریت پنل	",
           children: [
             { name: "مدیریت سطوح احراز هویت" },
             { name: "فعال/غیرفعالسازی" },
@@ -477,7 +463,6 @@ const currentData = {
         },
       ],
     },
-  
   ],
 };
 
@@ -488,28 +473,8 @@ const targetData = {
       name: "دسترسی ها",
       children: [
         {
-          name: "مدیریت قالب",
-          children: [
-            
-            { name: "فعال/غیرفعال/حذف یک قالب" },
-            { name: "مشاهده همه" },
-            { name: "جستجوی قالب براساس نوع و سکشن" },
-          ],
-        },
-        {
-          name: "مدیریت سرنخ",
-          children: [
-            
-            { name: "تغییر وضعیت" },
-            { name: "ارتباط سرنخ" },
-            { name: "جستجوی سرنخ" },
-            { name: "وضعیت بارگذاری سرنخ" },
-          ],
-        },
-        {
           name: "داشبورد",
           children: [
-            
             { name: "دریافت اطلاعات کارت ها" },
             { name: "دریافت اطلاعات کارت ها براساس نوع محصول	" },
           ],
@@ -517,7 +482,6 @@ const targetData = {
         {
           name: "سرنخ حقیقی",
           children: [
-            
             { name: "ارسال پیام" },
             { name: "ارسال ایمیل" },
             { name: "اختصاص دادن" },
@@ -533,7 +497,6 @@ const targetData = {
         {
           name: "سرنخ حقوقی",
           children: [
-            
             { name: "ارسال پیام" },
             { name: "ارسال ایمیل" },
             { name: "اختصاص دادن" },
@@ -611,16 +574,15 @@ const targetData = {
         },
         {
           name: "مرکز اطلاع رسانی",
-          children: [ { name: "مشاهده همه" }],
+          children: [{ name: "مشاهده همه" }],
         },
         {
           name: "فرصت فروش",
-          children: [ { name: "مشاهده همه" }],
+          children: [{ name: "مشاهده همه" }],
         },
         {
           name: "تسک",
           children: [
-            
             { name: "مشاهده همه	" },
             { name: "مشاهده تسک های یک سرنخ	" },
             { name: "تغییر وضعیت تسک به باز" },
@@ -648,24 +610,15 @@ const targetData = {
         },
         {
           name: "افراد",
-          children: [
-            
-            { name: "جستجوی افراد" },
-            { name: "دریافت فایل اکسل" },
-          ],
+          children: [{ name: "جستجوی افراد" }, { name: "دریافت فایل اکسل" }],
         },
         {
           name: "شرکت ها",
-          children: [
-            
-            { name: "جستجوی شرکت ها" },
-            { name: "دریافت فایل اکسل" },
-          ],
+          children: [{ name: "جستجوی شرکت ها" }, { name: "دریافت فایل اکسل" }],
         },
         {
           name: "احراز هویت",
           children: [
-            
             { name: "دانلود" },
             { name: "رد" },
             { name: "تائید" },
@@ -734,14 +687,15 @@ const targetData = {
           ],
         },
         {
-          name:"بیزینس ها	",
+          name: "بیزینس ها	",
           children: [
             { name: "ثبت" },
             { name: "جستجو با کد" },
             { name: "جستجو" },
           ],
         },
-        {name:"مدیریت پنل	",
+        {
+          name: "مدیریت پنل	",
           children: [
             { name: "مدیریت سطوح احراز هویت" },
             { name: "فعال/غیرفعالسازی" },
@@ -956,12 +910,44 @@ const targetData = {
             { name: "لیست اکشن های پایپلاین با کدمحصول/شناسه پایپلاین" },
           ],
         },
+        {
+          name: "مدیریت قالب",
+          children: [
+            { name: "فعال/غیرفعال/حذف یک قالب" },
+            { name: "مشاهده همه" },
+            { name: "جستجوی قالب براساس نوع و سکشن" },
+          ],
+        },
+        {
+          name: "مدیریت سرنخ",
+          children: [
+            { name: "تغییر وضعیت" },
+            { name: "ارتباط سرنخ" },
+            { name: "جستجوی سرنخ" },
+            { name: "وضعیت بارگذاری سرنخ" },
+          ],
+        },
       ],
     },
-  
   ],
 };
 
-export default function Home() {
+async function getTreeData() {
+  try {
+    const response = await fetch("http://localhost:3000/api/tree");
+    if (!response.ok) {
+      throw new Error("Failed to fetch tree data");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching tree data:", error);
+    return null;
+  }
+}
+
+export default async function Home() {
+  // const treeData = await getTreeData();
+  // console.log("Fetched tree data:", treeData);
+
   return <TreeComparator currentData={currentData} targetData={targetData} />;
 }
