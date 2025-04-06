@@ -932,18 +932,7 @@ const targetData = {
   ],
 };
 
-async function getTreeData() {
-  try {
-    const response = await fetch("http://localhost:3000/api/tree");
-    if (!response.ok) {
-      throw new Error("Failed to fetch tree data");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching tree data:", error);
-    return null;
-  }
-}
+
 
 export default async function Home() {
   // const treeData = await getTreeData();
