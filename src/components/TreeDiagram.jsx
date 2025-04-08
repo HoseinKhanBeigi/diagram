@@ -28,6 +28,12 @@ const CollapsibleTree = ({
   const svgRef = useRef(null);
   const [treeData, setTreeData] = useState(data);
 
+  // Add effect to update treeData when data prop changes
+  useEffect(() => {
+    console.log('Data prop changed:', data);
+    setTreeData(data);
+  }, [data]);
+
   useEffect(() => {
     if (!svgRef.current || !treeData) return;
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as d3 from 'd3';
 import TreeDiagram from './TreeDiagram.jsx';
 
@@ -15,6 +15,11 @@ const TreeComparator = ({ currentData, targetData }) => {
   const [highlightDifferences, setHighlightDifferences] = useState(false);
   const [currentZoom, setCurrentZoom] = useState(1);
   const [targetZoom, setTargetZoom] = useState(1);
+
+  // Add effect to log targetData changes
+  useEffect(() => {
+    console.log('Target data changed in TreeComparator:', targetData);
+  }, [targetData]);
 
   const handleZoom = (tree, zoom) => {
     if (tree === 'current') {

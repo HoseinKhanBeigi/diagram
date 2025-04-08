@@ -1,4 +1,8 @@
+'use client';
+
+import { useState } from 'react';
 import TreeComparator from "../components/TreeComparator.jsx";
+import React from 'react';
 
 const currentData = {
   name: "crm",
@@ -932,11 +936,112 @@ const targetData = {
   ],
 };
 
+export default function Home() {
+  const [targetDataState, setTargetDataState] = useState(targetData);
+  const [editing, setEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: targetData.name,
+    children: JSON.stringify(targetData.children, null, 2)
+  });
 
+  const handleUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      console.log('Current form data:', formData);
+      const parsedChildren = JSON.parse(formData.children);
+      console.log('Parsed children:', parsedChildren);
+      
+      const newData = {
+        name: formData.name,
+        children: parsedChildren
+      };
+      console.log('New data to set:', newData);
+      
+      setTargetDataState(newData);
+      console.log('State updated with:', newData);
+      setEditing(false);
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      alert('Invalid JSON format for children');
+    }
+  };
 
-export default async function Home() {
-  // const treeData = await getTreeData();
-  // console.log("Fetched tree data:", treeData);
+  // Add effect to log state changes
+  React.useEffect(() => {
+    console.log('targetDataState changed:', targetDataState);
+  }, [targetDataState]);
 
-  return <TreeComparator currentData={currentData} targetData={targetData} />;
+  return (
+    <div>
+      <div style={{ marginBottom: '20px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+          <h3>Target Data Editor</h3>
+          <button 
+            onClick={() => {
+              setEditing(!editing);
+              // Reset form data when entering edit mode
+              if (!editing) {
+                setFormData({
+                  name: targetDataState.name,
+                  children: JSON.stringify(targetDataState.children, null, 2)
+                });
+              }
+            }}
+            style={{ padding: '8px 16px', backgroundColor: editing ? '#ff4444' : '#4CAF50', color: 'white', border: 'none', borderRadius: '4px' }}
+          >
+            {editing ? 'Cancel' : 'Edit'}
+          </button>
+        </div>
+
+        {editing ? (
+          <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Name:</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+              />
+            </div>
+            
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Children (JSON):</label>
+              <textarea
+                value={formData.children}
+                onChange={(e) => setFormData({ ...formData, children: e.target.value })}
+                style={{ width: '100%', height: '200px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', fontFamily: 'monospace' }}
+              />
+            </div>
+
+            <button 
+              type="submit"
+              style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+            >
+              Update
+            </button>
+          </form>
+        ) : (
+          <div>
+            <p><strong>Current Name:</strong> {targetDataState.name}</p>
+            <p><strong>Children Structure:</strong></p>
+            <pre style={{ 
+              backgroundColor: '#f5f5f5', 
+              padding: '10px', 
+              borderRadius: '4px',
+              overflow: 'auto',
+              maxHeight: '200px'
+            }}>
+              {JSON.stringify(targetDataState.children, null, 2)}
+            </pre>
+          </div>
+        )}
+      </div>
+      
+      <TreeComparator 
+        currentData={currentData} 
+        targetData={targetDataState} 
+      />
+    </div>
+  );
 }
