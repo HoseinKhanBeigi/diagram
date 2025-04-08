@@ -966,6 +966,19 @@ export default function Home() {
     }
   };
 
+  const handleDownload = () => {
+    const jsonString = JSON.stringify(targetDataState, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'target-data.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   // Add effect to log state changes
   React.useEffect(() => {
     console.log('targetDataState changed:', targetDataState);
@@ -976,21 +989,29 @@ export default function Home() {
       <div style={{ marginBottom: '20px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
           <h3>Target Data Editor</h3>
-          <button 
-            onClick={() => {
-              setEditing(!editing);
-              // Reset form data when entering edit mode
-              if (!editing) {
-                setFormData({
-                  name: targetDataState.name,
-                  children: JSON.stringify(targetDataState.children, null, 2)
-                });
-              }
-            }}
-            style={{ padding: '8px 16px', backgroundColor: editing ? '#ff4444' : '#4CAF50', color: 'white', border: 'none', borderRadius: '4px' }}
-          >
-            {editing ? 'Cancel' : 'Edit'}
-          </button>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button 
+              onClick={handleDownload}
+              style={{ padding: '8px 16px', backgroundColor: '#2196F3', color: 'white', border: 'none', borderRadius: '4px' }}
+            >
+              Download JSON
+            </button>
+            <button 
+              onClick={() => {
+                setEditing(!editing);
+                // Reset form data when entering edit mode
+                if (!editing) {
+                  setFormData({
+                    name: targetDataState.name,
+                    children: JSON.stringify(targetDataState.children, null, 2)
+                  });
+                }
+              }}
+              style={{ padding: '8px 16px', backgroundColor: editing ? '#ff4444' : '#4CAF50', color: 'white', border: 'none', borderRadius: '4px' }}
+            >
+              {editing ? 'Cancel' : 'Edit'}
+            </button>
+          </div>
         </div>
 
         {editing ? (
