@@ -1010,7 +1010,7 @@ export default function Home() {
               <textarea
                 value={formData.children}
                 onChange={(e) => setFormData({ ...formData, children: e.target.value })}
-                style={{ width: '100%', height: '200px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', fontFamily: 'monospace' }}
+                style={{ width: '100%', height: '800px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', fontFamily: 'monospace' }}
               />
             </div>
 
