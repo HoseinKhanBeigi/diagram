@@ -996,21 +996,36 @@ export default function Home() {
             >
               Download JSON
             </button>
-            <button 
-              onClick={() => {
-                setEditing(!editing);
-                // Reset form data when entering edit mode
-                if (!editing) {
+            {editing ? (
+              <>
+                <button 
+                  type="submit"
+                  onClick={handleUpdate}
+                  style={{ padding: '8px 16px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px' }}
+                >
+                  Update
+                </button>
+                <button 
+                  onClick={() => setEditing(false)}
+                  style={{ padding: '8px 16px', backgroundColor: '#ff4444', color: 'white', border: 'none', borderRadius: '4px' }}
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button 
+                onClick={() => {
+                  setEditing(true);
                   setFormData({
                     name: targetDataState.name,
                     children: JSON.stringify(targetDataState.children, null, 2)
                   });
-                }
-              }}
-              style={{ padding: '8px 16px', backgroundColor: editing ? '#ff4444' : '#4CAF50', color: 'white', border: 'none', borderRadius: '4px' }}
-            >
-              {editing ? 'Cancel' : 'Edit'}
-            </button>
+                }}
+                style={{ padding: '8px 16px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px' }}
+              >
+                Edit
+              </button>
+            )}
           </div>
         </div>
 
@@ -1034,13 +1049,6 @@ export default function Home() {
                 style={{ width: '100%', height: '800px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', fontFamily: 'monospace' }}
               />
             </div>
-
-            <button 
-              type="submit"
-              style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-            >
-              Update
-            </button>
           </form>
         ) : (
           <div>
